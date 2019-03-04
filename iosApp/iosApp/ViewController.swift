@@ -23,8 +23,8 @@ class ViewController: UIViewController {
 
     func callSecretTeller() -> String {
         let script = """
-            var teller = SecretTeller.create()
-            teller.tell()
+            var teller = SecretTeller.create();
+            teller.tell();
         """
         return context.evaluateScript(script)?.toString() ?? "Nothing returned"
     }
