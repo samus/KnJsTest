@@ -8,7 +8,8 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        label.text = Proxy().proxyHello()
+        setupJS()
+        label.text = callSecretTeller()
     }
 
     @IBOutlet weak var label: UILabel!
@@ -17,6 +18,26 @@ class ViewController: UIViewController {
         context.exceptionHandler = { context, exception in
             print(exception!.toString())
         }
-        context.setObject(SecretTeller.Companion.self, forKeyedSubscript: "SecretCompanion" as NSString)
+        context.setObject(SecretTeller.self, forKeyedSubscript: "SecretTeller" as NSString)
+    }
+
+    func callSecretTeller() -> String {
+        let script = """
+            var teller = SecretTeller.create()
+            teller.tell()
+        """
+        return context.evaluateScript(script)?.toString() ?? "Nothing returned"
+    }
+}
+
+@objc protocol SecretTellerExports: JSExport {
+    var platform: String { get }
+    func tell() -> String
+    static func create() -> SecretTeller
+}
+
+extension SecretTeller: SecretTellerExports {
+    static func create() -> SecretTeller {
+        return SecretTeller()
     }
 }

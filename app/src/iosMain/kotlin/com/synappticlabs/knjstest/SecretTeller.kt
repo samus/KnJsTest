@@ -1,27 +1,10 @@
 package com.synappticlabs.knjstest
 
-import platform.JavaScriptCore.*
+actual class SecretTeller() {
 
-interface SecretTellerExports: JSExportProtocol {
-    val platform: String
-    fun tell(): String
-}
+    actual val platform: String = "Kotlin/Native iOS"
 
-interface SecretTellerCompanionExports: JSExportProtocol {
-    fun create(): SecretTeller
-}
-
-actual class SecretTeller: SecretTellerExports {
-
-    override val platform: String = "Kotlin/Native iOS"
-
-    actual override fun tell(): String {
+    actual fun tell(): String {
         return "This class is written in Kotlin/Native"
-    }
-
-    companion object: SecretTellerCompanionExports {
-        override fun create(): SecretTeller {
-            return SecretTeller()
-        }
     }
 }
