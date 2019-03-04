@@ -38,6 +38,6 @@ class ViewController: UIViewController {
 
 extension SecretTeller: SecretTellerExports {
     static func create() -> SecretTeller {
-        return SecretTeller()
+        return SecretTeller.Companion().createAndFreeze()
     }
 }
