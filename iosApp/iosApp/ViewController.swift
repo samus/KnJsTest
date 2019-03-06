@@ -24,6 +24,7 @@ class ViewController: UIViewController {
     func callSecretTeller() -> String {
         let script = """
             var teller = SecretTeller.create();
+            teller.platform = "Kotlin/Native touched by JavaScriptCore!!!";
             teller.tell();
         """
         return context.evaluateScript(script)?.toString() ?? "Nothing returned"
@@ -31,7 +32,7 @@ class ViewController: UIViewController {
 }
 
 @objc protocol SecretTellerExports: JSExport {
-    var platform: String { get }
+    var platform: String { get set }
     func tell() -> String
     static func create() -> SecretTeller
 }
